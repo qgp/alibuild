@@ -184,7 +184,7 @@ WORK_DIR=$(cd "$WORK_DIR"; pwd)
 [[ -z "$ARCHITECTURE" ]] && ARCHITECTURE=$(ls -1t $WORK_DIR | grep -vE '^[A-Z]+$' | head -n1)
 [[ -z "$ARCHITECTURE" ]] && { printHelp "Cannot autodetect architecture"; false; }
 
-MODULECMD=$(PATH="$PATH:`brew --prefix modules 2>/dev/null || true`/Modules/bin" which modulecmd || true)
+MODULECMD=$(PATH="$PATH:`brew --prefix modules 2>/dev/null || true`/Modules/bin:/usr/share/Modules/bin" which modulecmd || true)
 [[ -z "$MODULECMD" ]] && { installHint; false; }
 
 if [[ -d $WORK_DIR/MODULES/$ARCHITECTURE ]]; then
