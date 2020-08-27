@@ -45,7 +45,7 @@ export SOURCE0="${SOURCE0_DIR_OVERRIDE:-%(sourceDir)s}%(sourceName)s"
 export PKGPATH=${ARCHITECTURE}/${PKGNAME}/${PKGVERSION}-${PKGREVISION}
 mkdir -p "$WORK_DIR/BUILD" "$WORK_DIR/SOURCES" "$WORK_DIR/TARS" \
          "$WORK_DIR/SPECS" "$WORK_DIR/INSTALLROOT"
-export BUILDROOT="$WORK_DIR/BUILD/$PKGHASH"
+export BUILDROOT="$WORK_DIR/BUILD/$ARCHITECTURE/$PKGHASH"
 
 # In case the repository is local, it means we are in development mode, so we
 # install directly in $WORK_DIR/$PKGPATH so that we can do make install
@@ -72,9 +72,9 @@ if [[ "$INCREMENTAL_BUILD_HASH" == 0 ]]; then
 fi
 mkdir -p "$INSTALLROOT" "$BUILDROOT" "$BUILDDIR" "$WORK_DIR/INSTALLROOT/$PKGHASH/$PKGPATH"
 cd "$BUILDROOT"
-ln -snf $PKGHASH $WORK_DIR/BUILD/$PKGNAME-latest
+ln -snf $PKGHASH $WORK_DIR/BUILD/$ARCHITECTURE/$PKGNAME-latest
 if [[ $DEVEL_PREFIX ]]; then
-  ln -snf $PKGHASH $WORK_DIR/BUILD/$PKGNAME-latest-$DEVEL_PREFIX
+  ln -snf $PKGHASH $WORK_DIR/BUILD/$ARCHITECTURE/$PKGNAME-latest-$DEVEL_PREFIX
 fi
 
 # Reference statements

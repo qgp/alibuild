@@ -118,10 +118,13 @@ def doDetectArch(hasOsRelease, osReleaseLines, platformTuple, platformSystem, pl
     p = subprocess.Popen(["uname", "-m"], stdout=subprocess.PIPE)
     processor = p.stdout.read().decode("ascii").strip()
 
-  return format("%(d)s%(v)s_%(c)s",
+  tc = os.environ.get("CC")
+  sfx = "_" + tc if tc != None else "";
+  return format("%(d)s%(v)s_%(c)s%(t)s",
                 d=distribution.lower(),
                 v=version.split(".")[0],
-                c=processor.replace("_", "-"))
+                c=processor.replace("_", "-"),
+                t=sfx)
 
 # Try to guess a good platform. This does not try to cover all the
 # possibly compatible linux distributions, but tries to get right the

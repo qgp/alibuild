@@ -617,7 +617,7 @@ def doBuild(args, parser):
       ("linksPath", "TARS/%(architecture)s/%(package)s"),
       ("tarballHashDir", "%(workDir)s/TARS/%(architecture)s/store/%(prefix)s/%(hash)s"),
       ("tarballLinkDir", "%(workDir)s/TARS/%(architecture)s/%(package)s"),
-      ("buildDir", "%(workDir)s/BUILD/%(hash)s/%(package)s")
+      ("buildDir", "%(workDir)s/BUILD/%(architecture)s/%(hash)s/%(package)s")
     ]
     spec.update(dict([(x, format(y, **pkgSpec)) for (x, y) in varSpecs]))
     spec["old_devel_hash"] = readHashFile(spec["buildDir"]+"/.build_succeeded")
@@ -1083,12 +1083,13 @@ def doBuild(args, parser):
       updatablePkgs.append(spec["package"])
 
     buildErrMsg = format("Error while executing %(sd)s/build.sh on `%(h)s'.\n"
-                         "Log can be found in %(w)s/BUILD/%(p)s-latest%(devSuffix)s/log\n"
+                         "Log can be found in %(w)s/BUILD/%(a)s/%(p)s-latest%(devSuffix)s/log\n"
                          "Please upload it to CERNBox/Dropbox if you intend to request support.\n"
                          "Build directory is %(w)s/BUILD/%(p)s-latest%(devSuffix)s/%(p)s.",
                          h=socket.gethostname(),
                          sd=scriptDir,
                          w=abspath(args.workDir),
+                         a=args.architecture,
                          p=spec["package"],
                          devSuffix="-" + args.develPrefix
                                    if "develPrefix" in args and spec["package"] in develPkgs
